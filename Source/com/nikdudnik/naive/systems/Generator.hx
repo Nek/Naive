@@ -21,10 +21,14 @@ class Generator {
 //		if (count % 1 != 0) return;
 		var ents = g.world.query([Component.generator]);
         for (e in ents) {
-            var gen:Void->Ent = e.get(generator)[0];
-            var e:Ent = gen();
-            g.world.add(e);
+            useGen(g, e);
         }
-	}	
+	}
+
+    private static function useGen(g:Engine, e:Ent) {
+        var gen:Void->Ent = e.get(generator)[0];
+        var e:Ent = gen();
+        g.world.add(e);
+    }
 
 }

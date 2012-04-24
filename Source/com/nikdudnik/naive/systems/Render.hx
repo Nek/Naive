@@ -36,13 +36,28 @@ class Render {
 		lst.iter(function(e:Ent) {
 			var epx:Float = e.get(position)[0];
 			var epy:Float = e.get(position)[1];
+			var col:Int = e.get(renderable)[0];
 			data.push(epx);
 			data.push(epy);
-			data.push(0.0);
+            data.push(0.0);
+
+            var r = col >> 16;
+
+            var g = (col - (r << 16)) >> 8;
+
+            var b = col - (g << 8) - (r << 16);
+
+            trace("r: " + r);
+            trace("g: " + g);
+            trace("b " + b);
+
+			data.push(r);
+			data.push(g);
+			data.push(b);
 		});
 		if (data.length > 0) {
 			v.graphics.clear();
-			sheet.drawTiles(v.graphics, data, true);
+			sheet.drawTiles(v.graphics, data, true, Tilesheet.TILE_RGB);
 		};
 	}		
 
