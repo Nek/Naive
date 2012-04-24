@@ -26,7 +26,8 @@ class ComponentUtils {
 	
 	public static function create(comps:Array<Component>):Ent {
 		var e = new Ent();
-		
+
+
 		comps.iter(function(c:Component) {
 			e.set(c);
 		});

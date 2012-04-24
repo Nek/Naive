@@ -2,14 +2,15 @@ package com.nikdudnik.naive.core;
 
 import nme.display.Sprite;
 import nme.display.FPS;
-import nme.filters.GlowFilter;
 import nme.text.TextField;
 import nme.Lib;		
 import nme.events.Event;
 
-
 import com.nikdudnik.naive.core.Component;
 import com.nikdudnik.naive.core.Query;
+
+import haxe.FastList;
+
 
 using Lambda;
 using Type;
@@ -17,7 +18,7 @@ using Reflect;
 using com.nikdudnik.naive.core.Query;
 using com.nikdudnik.naive.core.Utils;
 
-typedef World = List<Ent>;
+typedef World = FastList<Ent>;
 
 /**
  * @author nek

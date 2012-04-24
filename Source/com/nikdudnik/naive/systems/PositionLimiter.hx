@@ -24,7 +24,9 @@ class PositionLimiter {
 		var lst = g.world.query([position]);
 		lst.iter(function(e:Ent) {
 			var epy:Float = e.get(position)[1];
-			if (epy > bound) g.world.remove(e);
+			if (epy > bound) {
+                g.world.remove(e);
+            }
 		});
 	}
 

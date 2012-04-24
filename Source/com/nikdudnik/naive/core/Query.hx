@@ -1,6 +1,9 @@
 package com.nikdudnik.naive.core;
 
 using Lambda;
+import haxe.FastList;
+
+import com.nikdudnik.naive.core.Component;
 
 /**
  * ...
@@ -8,25 +11,35 @@ using Lambda;
  */
 class Query {
 	
-	public static function query( l:List<Ent>, types: Array<Dynamic>):List<Ent> 
+	public static function query( l:FastList<Ent>, types: Array<Dynamic>):FastList<Ent>
 	{
-		return l.filter(function(e:Ent) {
-				return types.map(function(c:Dynamic):Bool {
-					return e.has(c);
-				}).fold(function(a:Bool, b:Bool):Bool {
-					return a && b;
-				}, true);
-			});
+        var filtered = new FastList<Ent>();
+        for (e in l) {
+            var fits = true;
+            for (t in types) {
+                fits = fits && e.has(t);
+            }
+            if (fits) filtered.add(e);
+        }
+
+        return filtered;
 	}		
 	
-	public static function exactly(l:List<Ent>, c:Component):List<Ent> {
-		
-		return l.filter(function(e:Ent):Bool {
-			return e.exactly(c);
-		});
+	public static function exactly(l:FastList<Ent>, c:Component):FastList<Ent> {
+
+        var filtered = new FastList<Ent>();
+        for (e in l) {
+            if (e.exactly(c)) filtered.add(e);
+        }
+
+        return filtered;
+
+//		return l.filter(function(e:Ent):Bool {
+//			return e.exactly(c);
+//		});
 	}
 	
-	public static function create(l:List<Ent>, comps:Array<Component>):Ent {
+	public static function create(l:FastList<Ent>, comps:Array<Component>):Ent {
 		var e = ComponentUtils.create(comps);
 		
 		l.add(e);

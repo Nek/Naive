@@ -29,6 +29,8 @@ using com.nikdudnik.naive.systems.Generator;
 class Game extends Engine {
 
 	private var tf:TextField;
+
+    public static var counter:Int = 0;
 	
 	override private function setup():Void {
 	
@@ -57,7 +59,7 @@ class Game extends Engine {
 	override private function loop():Void {
 		super.loop();
 		
-		tf.text = "Entities: " + world.length;
+		//tf.text = "Entities: " + world.si;
 		
 		generate();		
 		control();        

@@ -22,17 +22,25 @@ class Ent {
 	}	
 	
 	public function set(c:Component):Ent {
-		comps.add( c);
+        var type:String = Type.enumConstructor(c);
+		for (oldc in comps) {
+            if (Type.enumConstructor(oldc) == type) {
+                comps.remove(oldc);
+                break;
+            }
+        }
+        comps.add( c);
 		return this;
 	}
 	
 	public function get(enumConstructor:Dynamic):Array<Dynamic> {
-		var c = comps.filter(function(el:Component):Bool{
-			return ComponentUtils.typeEq(enumConstructor, el);
-		}).first();
-		if (c == null) return null;
-		return Type.enumParameters(c);
-	}	
+
+        for (c in comps) {
+           if (ComponentUtils.typeEq(enumConstructor, c)) return Type.enumParameters(c);
+        }
+
+		return null;
+	}
 	
 	public function del(enumConstructor:Dynamic):Bool {
 		var c = comps.filter(function(el:Component):Bool{

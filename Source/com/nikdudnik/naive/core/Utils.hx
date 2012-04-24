@@ -4,6 +4,8 @@ import com.nikdudnik.naive.core.Component;
 import com.nikdudnik.naive.core.Query;
 using com.nikdudnik.naive.core.Query;
 
+import haxe.FastList;
+
 import nme.display.Sprite;
 
 
@@ -13,7 +15,7 @@ import nme.display.Sprite;
  */
 class Utils {
 	
-	public static function createAddPlayer(world:List<Ent>):Ent {
+	public static function createAddPlayer(world:FastList<Ent>):Ent {
 		return world.create( [
 				position(50, 50), 
 				renderable(0xFF0000, 10), 
@@ -34,7 +36,7 @@ class Utils {
 		]);
 	}	
 	
-	public static function createAddGenerator(world:List<Ent>, f:Void->Ent):Ent {
+	public static function createAddGenerator(world:FastList<Ent>, f:Void->Ent):Ent {
 		return world.create([generator(f)]);
 	}
 
