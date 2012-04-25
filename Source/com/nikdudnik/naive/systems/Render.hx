@@ -1,7 +1,9 @@
 package com.nikdudnik.naive.systems;
 
+import nme.display.BitmapData;
 import nme.display.Tilesheet;
 import nme.geom.Rectangle;
+import nme.geom.Point;
 import nme.display.Sprite;
 
 using com.nikdudnik.naive.core.Query;
@@ -20,13 +22,22 @@ import nme.Assets;
  * ...
  * @author nek
  */
+
+typedef TileRectData = {
+    position: Rectangle,
+    center: Point
+}
+
 class Render {
 	
 	public static var sheet:Tilesheet;
 	
-	public static function setupRender(g:Engine):Void {
-		sheet = new Tilesheet(Assets.getBitmapData("assets/red_circle.png"));
-		sheet.addTileRect(new Rectangle(0, 0, 20, 20), new nme.geom.Point(10,10));
+	public static function setupRender(g:Engine, bmd:BitmapData, tiles:Array<TileRectData>):Void {
+        sheet = new Tilesheet(bmd);
+
+        for (t in tiles) {
+            sheet.addTileRect(t.position, t.center);
+        }
 	}
 
 	public static function draw(g:Engine, v:Sprite) {
@@ -35,9 +46,10 @@ class Render {
 		lst.iter(function(e:Ent) {
 			var epx:Float = e.get(position)[0];
 			var epy:Float = e.get(position)[1];
+			var ndx:Float = e.get(renderable)[0];
 			data.push(epx);
 			data.push(epy);
-            data.push(0.0);
+            data.push(ndx);
 		});
 		if (data.length > 0) {
 			v.graphics.clear();

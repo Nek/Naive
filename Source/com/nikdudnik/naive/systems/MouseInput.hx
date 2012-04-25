@@ -35,7 +35,7 @@ class MouseInput {
         mouseY = Lib.current.stage.mouseY;
 	}
 
-	public static function processMouse(g:Engine) {
+	public static function processMouseInput(g:Engine) {
 		var lst = g.world.query([mouseinput]);
 
 		lst.iter(function(e:Ent) {

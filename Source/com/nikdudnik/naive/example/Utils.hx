@@ -21,19 +21,26 @@ class Utils {
 	public static function createAddPlayer(world:FastList<Ent>):Ent {
 		return world.create( [
 				position(50, 50), 
-				renderable(0xFF0000, 10), 
-				hitRadius(10),
+				renderable(0),
+				hitRadius(8),
 				group(player),
 				sspeed(100),
                 follow(mouse)
 			]);
 	}
+
+    public static function createAddDebris(world:FastList<Ent>):Ent {
+    		return world.create( [
+    				renderable(2),
+    				vspeed(0, 100)
+    			]);
+    	}
 	
 	public static function createUFO(s:Engine):Ent {
 		return Ent.create([
 			position(Math.random()*800, -50),
-			renderable(0x00FF00, 10),
-			hitRadius(10),
+			renderable(1),
+			hitRadius(8),
 			group(ufo),
             sspeed(100)
 		]);

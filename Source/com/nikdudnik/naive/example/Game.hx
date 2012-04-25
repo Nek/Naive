@@ -1,9 +1,11 @@
 package com.nikdudnik.naive.example;
 
+import com.nikdudnik.naive.systems.Render;
 import nme.text.TextField;
 import nme.display.FPS;
 import nme.Lib;
 import nme.display.Sprite;
+import nme.installer.Assets;
 
 using com.nikdudnik.naive.example.Utils;
 using com.nikdudnik.naive.core.Query;
@@ -22,7 +24,8 @@ using com.nikdudnik.naive.systems.GroupFollower;
 using com.nikdudnik.naive.systems.Mover;
 using com.nikdudnik.naive.systems.PositionLimiter;
 using com.nikdudnik.naive.systems.Generator;
-
+import nme.geom.Point;
+import nme.geom.Rectangle;
 
 /**
  * ...
@@ -54,8 +57,21 @@ class Game extends Engine {
 		});
 
         world.create([mouseinput, group(mouse)]);
-		
-		setupRender();
+
+		setupRender(Assets.getBitmapData("assets/characters.png"), [
+            {
+                position: new Rectangle(0,0,16,16),
+                center: new Point(8, 8)
+            },
+            {
+                position: new Rectangle(16*1,0,16,16),
+                center: new Point(8, 8)
+            },
+            {
+                position: new Rectangle(16*2,0,16,16),
+                center: new Point(8, 8)
+            }
+        ]);
 		setupArrowKeysController();
 		setupPositionLimiter(700);
 		setupMouseFollower();
@@ -67,7 +83,7 @@ class Game extends Engine {
 		super.loop();
 
 		generateEnemy();
-		processMouse();
+		processMouseInput();
 		followGroup(mouse);
 		followGroup(player);
 		move();

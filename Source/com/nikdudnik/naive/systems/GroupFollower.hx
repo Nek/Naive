@@ -22,6 +22,9 @@ class GroupFollower {
 
 	
 	public static function followGroup(g:Engine, tag:Tag) {
+
+
+
 		var trg = g.world.exactly(group(tag));
 
         var count = 0;

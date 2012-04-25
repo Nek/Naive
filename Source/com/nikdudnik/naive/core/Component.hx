@@ -10,7 +10,7 @@ enum Component {
 	position(x:Float, y:Float);
 	vspeed(x:Float, y:Float);
 	sspeed(s:Float);
-	renderable(color: Int, r:Float);
+	renderable(tileIndex:Int);
 	view(s:DisplayObject);
 	group(t:Tag);
 	hitRadius(r:Float);
