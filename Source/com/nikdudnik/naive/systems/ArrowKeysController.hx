@@ -18,15 +18,15 @@ using Lambda;
  * ...
  * @author nek
  */
-class Controller {
+class ArrowKeysController {
 
 	private static var keys:FastList<Int>;
 
 
-	public static function setupController(g:Engine):Void {
-		Controller.keys = new FastList<Int>();
-		Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, Controller.pressKey);
-		Lib.current.stage.addEventListener(KeyboardEvent.KEY_UP, Controller.releaseKey);
+	public static function setupArrowKeysController(g:Engine):Void {
+		ArrowKeysController.keys = new FastList<Int>();
+		Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, ArrowKeysController.pressKey);
+		Lib.current.stage.addEventListener(KeyboardEvent.KEY_UP, ArrowKeysController.releaseKey);
 	}
 	
 	private static function pressKey(e:KeyboardEvent):Void {
@@ -38,7 +38,7 @@ class Controller {
 		keys.remove(e.keyCode);
 	}
 	
-	public static function control(g:Engine) {
+	public static function processArrowKeys(g:Engine) {
 		var lst = g.world.query([arrowkeys, sspeed]);
 				
 		var up:Bool = keys.remove(Keyboard.UP);

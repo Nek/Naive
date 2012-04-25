@@ -23,17 +23,5 @@ class ComponentUtils {
 	public static function valueEq(c1:Component, c2:Component):Bool {
 		return Type.enumEq(c1, c2);
 	}
-	
-	public static function create(comps:Array<Component>):Ent {
-		var e = new Ent();
 
-
-		comps.iter(function(c:Component) {
-			e.set(c);
-		});
-		
-		
-		return e;
-	}
-	
 }

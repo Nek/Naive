@@ -16,7 +16,9 @@ import com.nikdudnik.naive.core.Component;
 
 using com.nikdudnik.naive.systems.Render;
 using com.nikdudnik.naive.systems.Collider;
-using com.nikdudnik.naive.systems.Controller;
+using com.nikdudnik.naive.systems.ArrowKeysController;
+using com.nikdudnik.naive.systems.MouseInput;
+using com.nikdudnik.naive.systems.GroupFollower;
 using com.nikdudnik.naive.systems.Mover;
 using com.nikdudnik.naive.systems.PositionLimiter;
 using com.nikdudnik.naive.systems.Generator;
@@ -47,22 +49,27 @@ class Game extends Engine {
 		world.createAddGenerator(function():Ent {
 			var f = Math.random();
 			var u = createUFO();
-			if (f < .5) u.set(Component.renderable(0xFF0000, 20));
+            u.set(follow(player));
 			return u;
 		});
+
+        world.create([mouseinput, group(mouse)]);
 		
 		setupRender();
-		setupController();
+		setupArrowKeysController();
 		setupPositionLimiter(700);
+		setupMouseFollower();
 	}
+
+
 	
 	override private function loop():Void {
 		super.loop();
-		
-		//tf.text = "Entities: " + world.si;
-		
-		generate();		
-		control();        
+
+		generateEnemy();
+		processMouse();
+		followGroup(mouse);
+		followGroup(player);
 		move();
 		collide(ufo, player);
 		react();	

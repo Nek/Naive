@@ -58,4 +58,16 @@ class Ent {
 		return Lambda.exists(comps, callback(ComponentUtils.valueEq, en));
 	}
 
+    public static function create(comps:Array<Component>):Ent {
+        var e = new Ent();
+
+
+        comps.iter(function(c:Component) {
+            e.set(c);
+        });
+
+
+        return e;
+    }
+
 }

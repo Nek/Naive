@@ -17,8 +17,9 @@ enum Component {
 	collision(x:Float,y:Float, g:Tag);
 	generator(f:Void -> Ent);
 	dead;
-	mouse(x:Float, y:Float);
+	mouseinput;
 	arrowkeys(up:Bool, down:Bool, left: Bool, right: Bool);
+    follow(tag:Tag);
 }
 
 enum Tag
@@ -26,4 +27,5 @@ enum Tag
 		 player;
 		 ufo;
 		 explosion;
+		 mouse;
 	}

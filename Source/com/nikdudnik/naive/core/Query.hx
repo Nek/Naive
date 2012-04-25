@@ -40,7 +40,7 @@ class Query {
 	}
 	
 	public static function create(l:FastList<Ent>, comps:Array<Component>):Ent {
-		var e = ComponentUtils.create(comps);
+		var e = Ent.create(comps);
 		
 		l.add(e);
 		

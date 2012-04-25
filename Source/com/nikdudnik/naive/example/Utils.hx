@@ -24,20 +24,28 @@ class Utils {
 				renderable(0xFF0000, 10), 
 				hitRadius(10),
 				group(player),
-				arrowkeys(false,false,false,false),
-				sspeed(100)
+				sspeed(100),
+                follow(mouse)
 			]);
 	}
 	
 	public static function createUFO(s:Engine):Ent {
-		return ComponentUtils.create([
+		return Ent.create([
 			position(Math.random()*800, -50),
 			renderable(0x00FF00, 10),
 			hitRadius(10),
 			group(ufo),
-			vspeed(Math.random()*40-20, 100)
+            sspeed(100)
 		]);
-	}	
+	}
+
+    public static function generateEnemy(s:Engine):Ent {
+            var f = Math.random();
+            var u = createUFO(s);
+            u.set(follow(player));
+            s.world.add(u);
+            return u;
+        }
 	
 	public static function createAddGenerator(world:FastList<Ent>, f:Void->Ent):Ent {
 		return world.create([generator(f)]);
