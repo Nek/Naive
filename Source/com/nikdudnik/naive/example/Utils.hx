@@ -24,7 +24,7 @@ class Utils {
 				renderable(0),
 				hitRadius(8),
 				group(player),
-				sspeed(500),
+				sspeed(350),
                 follow(mouse)
 			]);
 	}
@@ -32,7 +32,6 @@ class Utils {
     public static function createAddDebris(world:FastList<Ent>):Ent {
     		return world.create( [
     				renderable(2),
-    				vspeed(0, 100),
                     bounds
     			]);
     	}
@@ -44,7 +43,7 @@ class Utils {
         			renderable(1),
         			hitRadius(8),
         			group(ufo),
-                    sspeed(100),
+                    sspeed(300),
                     attack(player),
                     bounds
         		]);

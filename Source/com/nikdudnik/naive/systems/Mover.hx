@@ -23,8 +23,7 @@ class Mover {
 			var py = e.get(position)[1];
 			var sx = e.get(vspeed)[0];
 			var sy = e.get(vspeed)[1];
-			e.del(position);
-			e.set(position(px+sx*g.elapsed, py+sy*g.elapsed));
+			e.set(position(px+sx, py+sy));
 		});
 	}	
 

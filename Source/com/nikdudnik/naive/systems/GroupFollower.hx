@@ -43,14 +43,14 @@ class GroupFollower {
 
                 for (e in lst) {
                     var pos = e.get(position);
-                    var sspeed = e.get(sspeed)[0];
+                    var sspeed = e.get(sspeed)[0]*g.elapsed;
                     var xd = cx - pos[0];
                     var yd = cy - pos[1];
                     var l = Math.sqrt(xd*xd + yd*yd);
-                    if (sspeed > l) sspeed = l;
-                    if ( xd != 0 ) xd = (xd / l) * sspeed;
-                    if ( yd != 0 ) yd = (yd / l) * sspeed;
-                    e.set(vspeed(xd, yd));
+
+                    if (l == 0) e.set(vspeed(0, 0));
+                    else if (l < sspeed) e.set(vspeed(xd, yd));
+                    else e.set(vspeed((xd / l) * sspeed, (yd / l) * sspeed));
                 }
 	}
 

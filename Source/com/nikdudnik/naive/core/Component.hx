@@ -10,6 +10,7 @@ enum Component {
 	position(x:Float, y:Float);
 	vspeed(x:Float, y:Float);
 	sspeed(s:Float);
+	maxspeed(s:Float);
 	renderable(tileIndex:Int);
 	view(s:DisplayObject);
 	group(t:Tag);
