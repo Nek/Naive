@@ -16,7 +16,6 @@ using Lambda;
 using Type;
 using Reflect;
 using com.nikdudnik.naive.core.Query;
-using com.nikdudnik.naive.core.Utils;
 
 typedef World = FastList<Ent>;
 

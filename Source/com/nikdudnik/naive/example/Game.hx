@@ -5,7 +5,7 @@ import nme.display.FPS;
 import nme.Lib;
 import nme.display.Sprite;
 
-using com.nikdudnik.naive.core.Utils;
+using com.nikdudnik.naive.example.Utils;
 using com.nikdudnik.naive.core.Query;
 using Lambda;
 

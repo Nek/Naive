@@ -1,8 +1,11 @@
-package com.nikdudnik.naive.core;
+package com.nikdudnik.naive.example;
 
 import com.nikdudnik.naive.core.Component;
+import com.nikdudnik.naive.core.ComponentUtils;
+import com.nikdudnik.naive.core.Ent;
 import com.nikdudnik.naive.core.Query;
 using com.nikdudnik.naive.core.Query;
+import com.nikdudnik.naive.core.Engine;
 
 import haxe.FastList;
 

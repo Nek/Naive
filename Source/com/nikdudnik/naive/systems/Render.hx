@@ -27,7 +27,6 @@ class Render {
 	public static function setupRender(g:Engine):Void {
 		sheet = new Tilesheet(Assets.getBitmapData("assets/red_circle.png"));
 		sheet.addTileRect(new Rectangle(0, 0, 20, 20), new nme.geom.Point(10,10));
-
 	}
 
 	public static function draw(g:Engine, v:Sprite) {
