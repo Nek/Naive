@@ -21,9 +21,11 @@ using com.nikdudnik.naive.systems.Collider;
 using com.nikdudnik.naive.systems.ArrowKeysController;
 using com.nikdudnik.naive.systems.MouseInput;
 using com.nikdudnik.naive.systems.GroupFollower;
+using com.nikdudnik.naive.systems.GroupAttacker;
 using com.nikdudnik.naive.systems.Mover;
-using com.nikdudnik.naive.systems.PositionLimiter;
+using com.nikdudnik.naive.systems.WorldBounds;
 using com.nikdudnik.naive.systems.Generator;
+using com.nikdudnik.naive.systems.Cleaner;
 import nme.geom.Point;
 import nme.geom.Rectangle;
 
@@ -48,13 +50,6 @@ class Game extends Engine {
 		fps.y = 20;
 		
 		world.createAddPlayer();
-				
-		world.createAddGenerator(function():Ent {
-			var f = Math.random();
-			var u = createUFO();
-            u.set(follow(player));
-			return u;
-		});
 
         world.create([mouseinput, group(mouse)]);
 
@@ -72,24 +67,35 @@ class Game extends Engine {
                 center: new Point(8, 8)
             }
         ]);
-		setupArrowKeysController();
-		setupPositionLimiter(700);
-		setupMouseFollower();
+		setupWorldBounds(new Rectangle(-150, -150, 300 + 300, 400 + 300));
 	}
 
 
+    private function makeDebris():Void {
+        var lst = world.exactly(group(ufo)).exactly(dead);
+
+        for (e in lst) {
+            var d = world.createAddDebris();
+            var pos = e.get(position);
+            var vs = e.get(vspeed);
+            d.set(position(pos[0], pos[1]))
+            .set(vspeed(vs[0], vs[1]));
+        }
+    }
 	
 	override private function loop():Void {
 		super.loop();
 
-		generateEnemy();
+        createAddUFO();
 		processMouseInput();
 		followGroup(mouse);
-		followGroup(player);
+		attackGroup(player);
 		move();
 		collide(ufo, player);
 		react();	
-		remove();	
+		makeDebris();
+	    killOutsideBounds();
+        removeDead();
 		draw(Lib.current);
 		
 	}

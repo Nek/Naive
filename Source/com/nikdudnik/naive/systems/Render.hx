@@ -53,7 +53,7 @@ class Render {
 		});
 		if (data.length > 0) {
 			v.graphics.clear();
-			sheet.drawTiles(v.graphics, data, true);
+			sheet.drawTiles(v.graphics, data, false);
 		};
 	}		
 

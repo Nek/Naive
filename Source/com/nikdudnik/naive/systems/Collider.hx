@@ -71,6 +71,8 @@ class Collider {
 			var pvy = e.get(collision)[1];
 			
 			e.set(position(wpx - pvx, wpy - pvy));
+
+            e.set(dead);
 			
 			e.del(collision);
 		});

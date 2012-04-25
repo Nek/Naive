@@ -24,7 +24,7 @@ class Utils {
 				renderable(0),
 				hitRadius(8),
 				group(player),
-				sspeed(100),
+				sspeed(600),
                 follow(mouse)
 			]);
 	}
@@ -36,23 +36,19 @@ class Utils {
     			]);
     	}
 	
-	public static function createUFO(s:Engine):Ent {
-		return Ent.create([
-			position(Math.random()*800, -50),
-			renderable(1),
-			hitRadius(8),
-			group(ufo),
-            sspeed(100)
-		]);
+	public static function createAddUFO(s:Engine):Ent {
+        var e = Ent.create([
+        // -100 400
+        			position(Math.random()*500 - 100 , -50),
+        			renderable(1),
+        			hitRadius(8),
+        			group(ufo),
+                    sspeed(100),
+                    attack(player)
+        		]);
+		s.world.add(e);
+        return e;
 	}
-
-    public static function generateEnemy(s:Engine):Ent {
-            var f = Math.random();
-            var u = createUFO(s);
-            u.set(follow(player));
-            s.world.add(u);
-            return u;
-        }
 	
 	public static function createAddGenerator(world:FastList<Ent>, f:Void->Ent):Ent {
 		return world.create([generator(f)]);

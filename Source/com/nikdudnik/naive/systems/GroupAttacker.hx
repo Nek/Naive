@@ -18,10 +18,12 @@ using Lambda;
  * ...
  * @author nek
  */
-class GroupFollower {
+class GroupAttacker {
 
 	
-	public static function followGroup(g:Engine, tag:Tag) {
+	public static function attackGroup(g:Engine, tag:Tag) {
+
+
 
 		var trg = g.world.exactly(group(tag));
 
@@ -39,18 +41,17 @@ class GroupFollower {
         cy /= count;
 
 
-        var lst = g.world.exactly(follow(tag));
+        var lst = g.world.exactly(attack(tag));
         lst = lst.query([sspeed, position]);
 
         for (e in lst) {
             var pos = e.get(position);
-            var maxspeed = e.get(sspeed)[0];
+            var sspeed = e.get(sspeed)[0];
             var xd = cx - pos[0];
             var yd = cy - pos[1];
             var l = Math.sqrt(xd*xd + yd*yd);
-            var f = l > maxspeed;
-            if ( xd != 0 ) xd = f ? (xd / l) * maxspeed : xd;
-            if ( yd != 0 ) yd = f ? (yd / l) * maxspeed : yd;
+            if ( xd != 0 ) xd = (xd / l) * sspeed;
+            if ( yd != 0 ) yd = (yd / l) * sspeed;
             e.set(vspeed(xd, yd));
         }
 	}	

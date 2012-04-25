@@ -20,27 +20,12 @@ using Lambda;
  */
 class MouseInput {
 
-	private static var mouseX:Float;
-	private static var mouseY:Float;
-
-    private static var hasNewData:Bool = false;
-
-
-	public static function setupMouseFollower(g:Engine):Void {
-		Lib.current.stage.addEventListener(MouseEvent.MOUSE_MOVE, MouseInput.mouseMoved);
-	}
-
-	private static function mouseMoved(e:MouseEvent):Void {
-        mouseX = Lib.current.stage.mouseX;
-        mouseY = Lib.current.stage.mouseY;
-	}
-
 	public static function processMouseInput(g:Engine) {
 		var lst = g.world.query([mouseinput]);
 
-		lst.iter(function(e:Ent) {
-            e.set(position(mouseX, mouseY));
-		});
+        for (e in lst) {
+            e.set(position(Lib.current.stage.mouseX, Lib.current.stage.mouseY));
+        }
 	}	
 
 }
