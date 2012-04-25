@@ -21,6 +21,7 @@ enum Component {
 	arrowkeys(up:Bool, down:Bool, left: Bool, right: Bool);
     follow(tag:Tag);
     attack(tag:Tag);
+    bounds;
 }
 
 enum Tag
