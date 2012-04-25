@@ -1,5 +1,6 @@
 package com.nikdudnik.naive.systems;
 
+import com.nikdudnik.naive.core.Component;
 import nme.geom.Rectangle;
 using com.nikdudnik.naive.core.Query;
 
@@ -22,7 +23,7 @@ class WorldBounds {
 	}			
 	
 	public static  function killOutsideBounds(g:Engine) {
-		var lst = g.world.query([position]);
+		var lst = g.world.query([position, Component.bounds]);
         for (e in lst) {
             var pos = e.get(position);
             var epy:Float = pos[1];
