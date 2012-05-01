@@ -32,15 +32,19 @@ class Render {
 	
 	public static var sheet:Tilesheet;
 	
-	public static function setup(bmd:BitmapData, tiles:Array<TileRectData>):Sprite->World->Void {
+	public static function setup(bmd:BitmapData, tiles:Array<TileRectData>):Sprite->(World->Void) {
         sheet = new Tilesheet(bmd);
 
         for (t in tiles) {
             sheet.addTileRect(t.position, t.center);
         }
 
-        return draw;
+        return addView;
 	}
+
+    private static function addView(v:Sprite):World->Void {
+        return callback(draw, v);
+    }
 
 	private static function draw(v:Sprite, world:World) {
 		var lst = world.query([position, renderable]);

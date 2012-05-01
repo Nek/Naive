@@ -20,9 +20,11 @@ using Lambda;
  */
 class GroupAttacker {
 
+    public static function attack(tag:Tag):World->Void {
+        return callback(attackGroup, tag);
+    }
 	
-	public static function attack(tag:Tag, world:World) {
-
+	private static function attackGroup(tag:Tag, world:World) {
 
 		var trg = world.exactly(group(tag));
 

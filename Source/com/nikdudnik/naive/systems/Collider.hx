@@ -19,8 +19,12 @@ typedef CollisionData = {
  * @author nek
  */
 class Collider {
+
+    public static function collide(g1:Tag, g2:Tag):World->Void {
+        return callback(callback(collideGroups, ufo), player);
+    }
 	
-	public static  function collide(g1:Tag, g2:Tag, world:World) {
+	public static  function collideGroups(g1:Tag, g2:Tag, world:World) {
 		var lst = world.query([group, position, hitRadius]);
 
 		var ents = lst.exactly(group(g1));

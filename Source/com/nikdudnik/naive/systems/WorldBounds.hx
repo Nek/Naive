@@ -31,6 +31,8 @@ class WorldBounds {
             var epx:Float = pos[0];
             if (epx > bounds.right || epx < bounds.left || epy > bounds.bottom || epy < bounds.top) {
                 e.set(dead);
+                e.del(position);
+                e.del(renderable);
             };
         };
 	}

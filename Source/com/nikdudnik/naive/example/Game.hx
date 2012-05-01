@@ -1,5 +1,7 @@
 package com.nikdudnik.naive.example;
 
+import nme.ui.Keyboard;
+import nme.events.KeyboardEvent;
 import com.nikdudnik.naive.core.Query;
 import com.nikdudnik.naive.systems.Collider;
 import com.nikdudnik.naive.systems.Collider;
@@ -50,7 +52,7 @@ class Game {
 
         Query.create(world, [Component.mouseinput, Component.group(Tag.mouse)]);
 
-        var draw = Render.setup(Assets.getBitmapData("assets/characters.png"), [
+        var draw = (Render.setup(Assets.getBitmapData("assets/characters.png"), [
             {
                 position: new Rectangle(0,0,16,16),
                 center: new Point(8, 8)
@@ -63,24 +65,36 @@ class Game {
                 position: new Rectangle(16*2,0,16,16),
                 center: new Point(8, 8)
             }
-        ]);
+        ]))(Lib.current);
 
         var killOutsideBounds = WorldBounds.setup(new Rectangle(-150, -150, 300 + 300, 400 + 300));
 
         var mainGameLoop = new GameLoop(world);
 
-        mainGameLoop.add(Utils.createAddUFO);
         mainGameLoop.add(MouseInput.process);
-        mainGameLoop.add(GroupFollower.follow(mouse));
-        mainGameLoop.add(callback(GroupAttacker.attack, player));
-        mainGameLoop.add(Mover.move);
-        mainGameLoop.add(callback(callback(Collider.collide, ufo), player));
-        mainGameLoop.add(Collider.react);
-        mainGameLoop.add(Utils.makeDebris);
-        mainGameLoop.add(killOutsideBounds);
-        mainGameLoop.add(Cleaner.removeDead);
-        mainGameLoop.add(callback(draw, Lib.current));
 
+        mainGameLoop.add(GroupFollower.follow(mouse));
+        mainGameLoop.add(GroupAttacker.attack(player));
+        mainGameLoop.add(Mover.move);
+        mainGameLoop.add(Collider.collide(ufo, player));
+        mainGameLoop.add(Collider.react);
+        mainGameLoop.add(killOutsideBounds);
+
+        mainGameLoop.add(Utils.makeDebris);
+        mainGameLoop.add(Utils.createAddUFO);
+        mainGameLoop.add(Cleaner.removeDead);
+
+        mainGameLoop.add(draw);
+
+
+
+
+        Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, function(e:KeyboardEvent):Void {
+            if (e.keyCode == Keyboard.SPACE) {
+                mainGameLoop.paused = true;
+                trace("!");
+            }
+        });
 
         tf = new TextField();
         tf.text = "Trace HUD";
