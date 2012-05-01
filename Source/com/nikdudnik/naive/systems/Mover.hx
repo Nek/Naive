@@ -6,7 +6,7 @@ using com.nikdudnik.naive.core.Query;
 using Lambda;
 
 import com.nikdudnik.naive.core.Ent;
-import com.nikdudnik.naive.core.Engine;
+import com.nikdudnik.naive.core.GameLoop;
 
 /**
  * ...
@@ -14,9 +14,8 @@ import com.nikdudnik.naive.core.Engine;
  */
 class Mover {
 	
-	public static  function move(g:Engine) {
-	
-		var lst = g.world.query([vspeed, position]);
+	public static  function move(world:World) {
+		var lst = world.query([vspeed, position]);
 	
 		lst.iter(function(e:Ent) {
 			var px = e.get(position)[0];

@@ -8,13 +8,21 @@ import nme.events.Event;
 import com.nikdudnik.naive.example.Game;
 
 class Naive extends Sprite {
-		
-	public function new () {
-		super ();
-	}
 	
 	public static function main () {
 		new Game ();
-	}	
+	}
+
+    /*
+
+    game loops
+
+    entities list
+
+    current game loop
+
+
+
+     */
 
 }

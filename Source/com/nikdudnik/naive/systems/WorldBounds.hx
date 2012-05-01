@@ -8,7 +8,7 @@ import com.nikdudnik.naive.core.Component;
 using Lambda;
 
 import com.nikdudnik.naive.core.Ent;
-import com.nikdudnik.naive.core.Engine;
+import com.nikdudnik.naive.core.GameLoop;
 
 /**
  * ...
@@ -18,12 +18,13 @@ class WorldBounds {
 	
 	private static var bounds:Rectangle;
 
-	public static function setupWorldBounds(g:Engine, bounds:Rectangle):Void {
+	public static function setup(bounds:Rectangle):World->Void {
 		WorldBounds.bounds = bounds;
+        return killOutsideBounds;
 	}			
 	
-	public static  function killOutsideBounds(g:Engine) {
-		var lst = g.world.query([position, Component.bounds]);
+	private static  function killOutsideBounds(world:World) {
+		var lst = world.query([position, Component.bounds]);
         for (e in lst) {
             var pos = e.get(position);
             var epy:Float = pos[1];

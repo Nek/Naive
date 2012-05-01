@@ -4,7 +4,7 @@ import com.nikdudnik.naive.core.Component;
 
 using com.nikdudnik.naive.core.Query;
 import com.nikdudnik.naive.core.Ent;
-import com.nikdudnik.naive.core.Engine;
+import com.nikdudnik.naive.core.GameLoop;
 using Lambda;
 
 typedef CollisionData = {
@@ -20,9 +20,8 @@ typedef CollisionData = {
  */
 class Collider {
 	
-	public static  function collide(g:Engine, g1:Tag, g2:Tag) {
-		
-		var lst = g.world.query([group, position, hitRadius]);
+	public static  function collide(g1:Tag, g2:Tag, world:World) {
+		var lst = world.query([group, position, hitRadius]);
 
 		var ents = lst.exactly(group(g1));
 		var obst = lst.exactly(group(g2));
@@ -60,8 +59,9 @@ class Collider {
 		});
 	}		
 	
-	public static function react(g:Engine) {
-		var lst = g.world.query([collision]);
+	public static function react(world:World) {
+
+		var lst = world.query([collision]);
 		lst.iter(function(e:Ent) {
 			
 			var wpx = e.get(position)[0];

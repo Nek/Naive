@@ -4,7 +4,7 @@ import nme.Lib;
 using com.nikdudnik.naive.core.Query;
 
 import com.nikdudnik.naive.core.Ent;
-import com.nikdudnik.naive.core.Engine;
+import com.nikdudnik.naive.core.GameLoop;
 
 import nme.ui.Keyboard;
 
@@ -23,7 +23,7 @@ class ArrowKeysController {
 	private static var keys:FastList<Int>;
 
 
-	public static function setupArrowKeysController(g:Engine):Void {
+	public static function setupArrowKeysController(g:GameLoop):Void {
 		ArrowKeysController.keys = new FastList<Int>();
 		Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, ArrowKeysController.pressKey);
 		Lib.current.stage.addEventListener(KeyboardEvent.KEY_UP, ArrowKeysController.releaseKey);
@@ -38,7 +38,7 @@ class ArrowKeysController {
 		keys.remove(e.keyCode);
 	}
 	
-	public static function processArrowKeys(g:Engine) {
+	public static function processArrowKeys(g:GameLoop) {
 		var lst = g.world.query([arrowkeys, sspeed]);
 				
 		var up:Bool = keys.remove(Keyboard.UP);

@@ -1,11 +1,12 @@
 package com.nikdudnik.naive.example;
 
+import haxe.PosInfos;
 import com.nikdudnik.naive.core.Component;
 import com.nikdudnik.naive.core.ComponentUtils;
 import com.nikdudnik.naive.core.Ent;
 import com.nikdudnik.naive.core.Query;
 using com.nikdudnik.naive.core.Query;
-import com.nikdudnik.naive.core.Engine;
+import com.nikdudnik.naive.core.GameLoop;
 
 import haxe.FastList;
 
@@ -36,7 +37,7 @@ class Utils {
     			]);
     	}
 	
-	public static function createAddUFO(s:Engine):Ent {
+	public static function createAddUFO(world:World):Void {
         var e = Ent.create([
         // -100 400
         			position(Math.random()*500 - 100 , -50),
@@ -47,12 +48,24 @@ class Utils {
                     attack(player),
                     bounds
         		]);
-		s.world.add(e);
-        return e;
+		world.add(e);
 	}
 	
 	public static function createAddGenerator(world:FastList<Ent>, f:Void->Ent):Ent {
+        trace("createAddGenerator");
 		return world.create([generator(f)]);
 	}
+
+    public static function makeDebris(world:World):Void {
+        var lst = world.exactly(group(ufo)).exactly(dead);
+
+        for (e in lst) {
+            var d = Utils.createAddDebris(world);
+            var pos = e.get(position);
+            var vs = e.get(vspeed);
+            d.set(position(pos[0], pos[1]))
+            .set(vspeed(vs[0], vs[1]));
+        }
+    }
 
 }

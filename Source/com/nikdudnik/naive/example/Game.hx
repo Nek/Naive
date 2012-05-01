@@ -1,5 +1,12 @@
 package com.nikdudnik.naive.example;
 
+import com.nikdudnik.naive.core.Query;
+import com.nikdudnik.naive.systems.Collider;
+import com.nikdudnik.naive.systems.Collider;
+import com.nikdudnik.naive.systems.Mover;
+import com.nikdudnik.naive.systems.GroupFollower;
+import com.nikdudnik.naive.systems.MouseInput;
+import com.nikdudnik.naive.example.Utils;
 import com.nikdudnik.naive.systems.Render;
 import nme.text.TextField;
 import nme.display.FPS;
@@ -7,25 +14,25 @@ import nme.Lib;
 import nme.display.Sprite;
 import nme.installer.Assets;
 
-using com.nikdudnik.naive.example.Utils;
+import com.nikdudnik.naive.example.Utils;
 using com.nikdudnik.naive.core.Query;
 using Lambda;
 
 
-import com.nikdudnik.naive.core.Engine;
+import com.nikdudnik.naive.core.GameLoop;
 import com.nikdudnik.naive.core.Ent;
 import com.nikdudnik.naive.core.Component;
 
-using com.nikdudnik.naive.systems.Render;
-using com.nikdudnik.naive.systems.Collider;
-using com.nikdudnik.naive.systems.ArrowKeysController;
-using com.nikdudnik.naive.systems.MouseInput;
-using com.nikdudnik.naive.systems.GroupFollower;
-using com.nikdudnik.naive.systems.GroupAttacker;
-using com.nikdudnik.naive.systems.Mover;
-using com.nikdudnik.naive.systems.WorldBounds;
-using com.nikdudnik.naive.systems.Generator;
-using com.nikdudnik.naive.systems.Cleaner;
+import com.nikdudnik.naive.systems.Render;
+import com.nikdudnik.naive.systems.Collider;
+import com.nikdudnik.naive.systems.ArrowKeysController;
+import com.nikdudnik.naive.systems.MouseInput;
+import com.nikdudnik.naive.systems.GroupFollower;
+import com.nikdudnik.naive.systems.GroupAttacker;
+import com.nikdudnik.naive.systems.Mover;
+import com.nikdudnik.naive.systems.WorldBounds;
+import com.nikdudnik.naive.systems.Generator;
+import com.nikdudnik.naive.systems.Cleaner;
 import nme.geom.Point;
 import nme.geom.Rectangle;
 
@@ -33,27 +40,17 @@ import nme.geom.Rectangle;
  * ...
  * @author nek
  */
-class Game extends Engine {
+class Game {
 
 	private var tf:TextField;
 
-    public static var counter:Int = 0;
-	
-	override private function setup():Void {
-	
-		tf = new TextField();
-		tf.text = "Trace HUD";
-		Lib.current.addChild(tf);
-		
-		var fps = new FPS();
-		Lib.current.addChild(fps);
-		fps.y = 20;
-		
-		world.createAddPlayer();
+    public function new() {
+        var world = new World();
+        Utils.createAddPlayer(world);
 
-        world.create([mouseinput, group(mouse)]);
+        Query.create(world, [Component.mouseinput, Component.group(Tag.mouse)]);
 
-		setupRender(Assets.getBitmapData("assets/characters.png"), [
+        var draw = Render.setup(Assets.getBitmapData("assets/characters.png"), [
             {
                 position: new Rectangle(0,0,16,16),
                 center: new Point(8, 8)
@@ -67,37 +64,34 @@ class Game extends Engine {
                 center: new Point(8, 8)
             }
         ]);
-		setupWorldBounds(new Rectangle(-150, -150, 300 + 300, 400 + 300));
-	}
+
+        var killOutsideBounds = WorldBounds.setup(new Rectangle(-150, -150, 300 + 300, 400 + 300));
+
+        var mainGameLoop = new GameLoop(world);
+
+        mainGameLoop.add(Utils.createAddUFO);
+        mainGameLoop.add(MouseInput.process);
+        mainGameLoop.add(GroupFollower.follow(mouse));
+        mainGameLoop.add(callback(GroupAttacker.attack, player));
+        mainGameLoop.add(Mover.move);
+        mainGameLoop.add(callback(callback(Collider.collide, ufo), player));
+        mainGameLoop.add(Collider.react);
+        mainGameLoop.add(Utils.makeDebris);
+        mainGameLoop.add(killOutsideBounds);
+        mainGameLoop.add(Cleaner.removeDead);
+        mainGameLoop.add(callback(draw, Lib.current));
 
 
-    private function makeDebris():Void {
-        var lst = world.exactly(group(ufo)).exactly(dead);
+        tf = new TextField();
+        tf.text = "Trace HUD";
+        Lib.current.addChild(tf);
 
-        for (e in lst) {
-            var d = world.createAddDebris();
-            var pos = e.get(position);
-            var vs = e.get(vspeed);
-            d.set(position(pos[0], pos[1]))
-            .set(vspeed(vs[0], vs[1]));
-        }
+        var fps = new FPS();
+        Lib.current.addChild(fps);
+        fps.y = 20;
     }
-	
-	override private function loop():Void {
-		super.loop();
 
-        createAddUFO();
-		processMouseInput();
-		followGroup(mouse);
-		attackGroup(player);
-		move();
-		collide(ufo, player);
-		react();	
-		makeDebris();
-	    killOutsideBounds();
-        removeDead();
-		draw(Lib.current);
-		
-	}
+
+
 
 }

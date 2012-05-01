@@ -23,34 +23,45 @@ typedef World = FastList<Ent>;
  * @author nek
  */
 	
-class Engine {
+class GameLoop {
 
 	public var world:World;
 	public var time:Int;
 	public var elapsed:Float;
+    private var accumulator:Float;
+
+    private var steps:Array<World->Void>;
 	
 	
-	public function new () {
-				
+	public function new (w:World) {
+
+        steps = [];
+
+        world = w;
+
+
+        accumulator = 0;
 		
 		time = Lib.getTimer();
-		world = new World();
-		
-		setup();
-		
+
 		Lib.current.addEventListener(Event.ENTER_FRAME, gameLoop);
 	}
 
 	private function gameLoop(e:Dynamic):Void {
-		loop();
-	}
-	
-	private function loop():Void {
-		var newTime = Lib.getTimer();
+        var newTime = Lib.getTimer();
         elapsed = (newTime - time)/1000;
         time = newTime;
+
+        accumulator += elapsed;
+        if (accumulator > 1/30) {
+            for (step in steps) {
+                step(world);
+            }
+            accumulator -= 1/30;
+        }
 	}
-	
-	private function setup():Void {
-	}
+
+    public function add(step:World->Void) {
+        steps.push(step);
+    }
 }

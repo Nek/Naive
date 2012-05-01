@@ -4,7 +4,7 @@ import nme.Lib;
 using com.nikdudnik.naive.core.Query;
 
 import com.nikdudnik.naive.core.Ent;
-import com.nikdudnik.naive.core.Engine;
+import com.nikdudnik.naive.core.GameLoop;
 
 import nme.ui.Keyboard;
 
@@ -20,10 +20,14 @@ using Lambda;
  */
 class GroupFollower {
 
-	
-	public static function followGroup(g:Engine, tag:Tag) {
 
-		var trg = g.world.exactly(group(tag));
+    public static function follow(tag:Tag):World->Void {
+        return callback(followGroup, tag);
+    }
+	
+	private static function followGroup(tag:Tag, world:World) {
+
+		var trg = world.exactly(Component.group(tag));
 
         var count = 0;
         var cx = 0.0;
@@ -38,12 +42,12 @@ class GroupFollower {
         cx /= count;
         cy /= count;
 
-        var lst = g.world.exactly(follow(tag));
+        var lst = world.exactly(Component.follow(tag));
                 lst = lst.query([sspeed, position]);
 
                 for (e in lst) {
                     var pos = e.get(position);
-                    var sspeed = e.get(sspeed)[0]*g.elapsed;
+                    var sspeed = e.get(sspeed)[0]*(1/30);
                     var xd = cx - pos[0];
                     var yd = cy - pos[1];
                     var l = Math.sqrt(xd*xd + yd*yd);

@@ -6,7 +6,7 @@ import com.nikdudnik.naive.core.Component;
 using Lambda;
 
 import com.nikdudnik.naive.core.Ent;
-import com.nikdudnik.naive.core.Engine;
+import com.nikdudnik.naive.core.GameLoop;
 
 /**
  * ...
@@ -14,10 +14,10 @@ import com.nikdudnik.naive.core.Engine;
  */
 class Cleaner {
 	
-	public static  function removeDead(g:Engine) {
-		var lst = g.world.exactly(dead);
+	public static  function removeDead(world:World) {
+		var lst = world.exactly(dead);
         for (e in lst) {
-            g.world.remove(e);
+            world.remove(e);
         }
 	}
 
