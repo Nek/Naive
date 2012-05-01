@@ -7,7 +7,7 @@
 	<source path="Source" />
 	<haxelib name="nme" />
 	<assets path="Assets" rename="assets" include="*" exclude="nme.svg" />
-	<icon path="Assets/nme.svg" />
+	<!--<icon path="Assets/nme.svg" />-->
 	<ndll name="std" />
 	<ndll name="regexp" />
 	<ndll name="zlib" />
