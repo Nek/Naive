@@ -1,6 +1,8 @@
 package com.nikdudnik.naive.core;
 
 import nme.events.TimerEvent;
+import nme.utils.Timer;
+import nme.events.TimerEvent;
 import nme.display.Sprite;
 import nme.display.FPS;
 import nme.text.TextField;
@@ -31,11 +33,17 @@ class GameLoop {
 	public var elapsed:Float;
     private var accumulator:Float;
 
+    public static inline var FRAME_TIME:Float = 25.0; // 1000/40
+
     private var steps:Array<World->Void>;
 
     private var timeScale:Float;
 	
 	public function new (w:World) {
+
+        getDiff = function() {
+            return 0;
+        };
 
         timeScale = 1;
 
@@ -54,24 +62,33 @@ class GameLoop {
 
     public var paused:Bool;
 
+    private function beginTimeCount():Void->Int {
+        var curr = Lib.getTimer();
+        return function() {
+            return Lib.getTimer() - curr;
+        };
+    }
+
 	private function gameLoop(e:Dynamic):Void {
-        if (paused) return;
-
-        var newTime = Lib.getTimer();
-        elapsed = (newTime - time)/1000;
-        time = newTime;
-
-        accumulator += elapsed;
-
-        if (accumulator > 1/30) {
-            for (step in steps) {
-                step(world);
-            };
-            accumulator -= 1/30;
-        }
+        runSteps(world);
+        render(world);
 	}
+
+    private function runSteps(world:World) {
+        for (step in 0...steps.length) {
+            steps[step](world);
+        };
+    }
+
+    private var getDiff:Void->Int;
 
     public function add(step:World->Void) {
         steps.push(step);
     }
+
+    public function addRender(step:World->Void) {
+        render = step;
+    }
+
+    private var render:World->Void;
 }

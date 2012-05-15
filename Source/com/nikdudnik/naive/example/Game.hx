@@ -84,9 +84,7 @@ class Game {
         mainGameLoop.add(Utils.createAddUFO);
         mainGameLoop.add(Cleaner.removeDead);
 
-        mainGameLoop.add(draw);
-
-
+        mainGameLoop.addRender(draw);
 
 
         Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, function(e:KeyboardEvent):Void {

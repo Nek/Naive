@@ -47,7 +47,7 @@ class GroupFollower {
 
                 for (e in lst) {
                     var pos = e.get(position);
-                    var sspeed = e.get(sspeed)[0]*(1/30);
+                    var sspeed = e.get(sspeed)[0]*GameLoop.FRAME_TIME/1000;
                     var xd = cx - pos[0];
                     var yd = cy - pos[1];
                     var l = Math.sqrt(xd*xd + yd*yd);
