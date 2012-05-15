@@ -3,7 +3,7 @@
 	<meta title="Naive" package="com.nikdudnik.naive" version="1.0.0" company="" />
 	<app main="Naive" file="Naive" path="Export" />
 	<window width="300" height="400" unless="mobile" />
-	<window fps="60" />
+	<window fps="40" />
 	<source path="Source" />
 	<haxelib name="nme" />
 	<assets path="Assets" rename="assets" include="*" exclude="nme.svg" />
