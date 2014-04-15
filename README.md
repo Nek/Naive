@@ -1,3 +1,5 @@
+This this project is officially dead. Feel free to use what's done though.
+
 Naive – haxenme component game engine.
 My first attempt at component based game architecture. Maybe I should call it Stupid instead.
 It's highly experimental and will change often while I incorporate new features.
